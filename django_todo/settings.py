@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'todo'  # name of your own apps for Django to look for
 ]
 
 MIDDLEWARE = [
