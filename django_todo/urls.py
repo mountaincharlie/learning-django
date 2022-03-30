@@ -18,6 +18,6 @@ from django.urls import path
 from todo.views import get_todo_list  # importing views where we write our functions
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # default admin path [CHANGE URL TO KEEP IT SAFE]
     path('', get_todo_list, name='get_todo_list')
 ]
