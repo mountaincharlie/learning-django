@@ -10,20 +10,24 @@
         <h1>Add a ToDo Item:</h1>
         <form method="POST" action="add">  <!-- submitting the form to our 'add' url -->
             {% csrf_token %} <!-- randomly generated hidden input to varify the form data is coming from our app -->
-            <div>
+
+            <!-- genertaing the form using form.py instead -->
+            <!-- id => to target with CSS, name => to target the value within our views function -->
+            <!-- <div>
                 <p>
                     <label for="id_name">Name: </label>
                     <input type="text" id="id_name" name="item_name">
-                    <!-- id => to target with CSS, name => to target the value within our views function -->
                 </p>
             </div>
             <div>
                 <p>
                     <label for="id_done">Done: </label>
                     <input type="checkbox" id="id_done" name="done">
-                    <!-- id => to target with CSS, name => to target the value within our views function -->
                 </p>
-            </div>
+            </div> -->
+
+            <!-- .as_p => 'as paragraphs' for vertical layout -->
+            {{ form.as_p }}
             <div>
                 <p>
                     <button type="submit">Add Item</button>

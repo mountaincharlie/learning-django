@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>Edit a ToDo Item:</h1>
+        <form method="POST">  <!-- no action => posts to current url -->
+            {% csrf_token %} <!-- randomly generated hidden input to varify the form data is coming from our app -->
+            <!-- .as_p => 'as paragraphs' for vertical layout -->
+            {{ form.as_p }}
+            <div>
+                <p>
+                    <button type="submit">Update Item</button>
+                </p>
+            </div>
+        </form>
+    
+    </body>
+</html>

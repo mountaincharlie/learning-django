@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Item
+from .forms import ItemForm
 
 # Create your views here.
 
 
 def get_todo_list(request):
     items = Item.objects.all()
+    # context => data that needs to be used in the rendered template
     context = {
         'items': items
     }
@@ -13,11 +15,35 @@ def get_todo_list(request):
 
 
 def add_item(request):
+    # the POST handler
     if request.method == 'POST':
         # getting the info from the form
-        name = request.POST.get('item_name')
-        done = 'done' in request.POST  # checking if its been ticked
-        Item.objects.create(name=name, done=done)  # creating the new item
-        return redirect('get_todo_list')  # calling the function to return to home
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # calling the function to return to home
+            return redirect('get_todo_list')
+    # using forms.py
+    form = ItemForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'todo/add_item.html', context)  # returns a HttpResponse
 
-    return render(request, 'todo/add_item.html')  # returns a HttpResponse
+
+def edit_item(request, item_id):
+    # getting the item from the db
+    item = get_object_or_404(Item, id=item_id)
+    # the POST handler
+    if request.method == 'POST':
+        # getting the info from the form
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('get_todo_list')
+    # specifying the data the form should be pre-popped with
+    form = ItemForm(instance=item)
+    context = {
+        'form': form
+    }
+    return render(request, 'todo/edit_item.html', context)
