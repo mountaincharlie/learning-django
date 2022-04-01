@@ -10,3 +10,8 @@ class TestModels(TestCase):
         # creating a new item without specified done status
         item = Item.objects.create(name='Test Todo Item')
         self.assertFalse(item.done)
+
+
+    def test_item_string_method_returns_name(self):
+        item = Item.objects.create(name='Test Todo Item')
+        self.assertEqual(str(item), 'Test Todo Item')
