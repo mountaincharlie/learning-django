@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 import dj_database_url
 
+# var to check if we're in development mode or not
+development = os.environ.get('DEVELOPMENT', False)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,9 +29,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-u*jj0$wvnr)rr=341u=u)
 # HAVING 2 VARS HERE => second one is a default setting
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = development  # only True in development mode (False on Heroku)
 
-ALLOWED_HOSTS = ['django-todo-list-walkthrough.herokuapp.com']
+if development:
+    ALLOWED_HOSTS = ['localhost']
+else:
+    ALLOWED_HOSTS = [os.environ.get('HEROKU_HOSTNAME')]
 
 
 # Application definition
@@ -77,15 +83,18 @@ WSGI_APPLICATION = 'django_todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-DATABASES = {
-    'default': dj_database_url.parse('postgres://inzezgttvidgoi:c7c37699ae8f92a71efcb14bb807dee781ff3493ffe40767267db36a4cfeeaeb@ec2-176-34-211-0.eu-west-1.compute.amazonaws.com:5432/dflujr9cfudujl')
-}
+if development:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse('postgres://inzezgttvidgoi:c7c37699ae8f92a71efcb14bb807dee781ff3493ffe40767267db36a4cfeeaeb@ec2-176-34-211-0.eu-west-1.compute.amazonaws.com:5432/dflujr9cfudujl')
+    }
+
 
 
 # Password validation
