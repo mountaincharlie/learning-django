@@ -93,7 +93,7 @@ if development:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.parse('postgres://inzezgttvidgoi:c7c37699ae8f92a71efcb14bb807dee781ff3493ffe40767267db36a4cfeeaeb@ec2-176-34-211-0.eu-west-1.compute.amazonaws.com:5432/dflujr9cfudujl')
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
 
 
